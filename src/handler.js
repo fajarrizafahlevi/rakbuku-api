@@ -29,7 +29,7 @@ const addBookHandler = (request, h) => {
 
   const isSuccess = books.filter((book) => book.id === id).length > 0;
 
-  if (name === '') {
+  if (!name) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku',
