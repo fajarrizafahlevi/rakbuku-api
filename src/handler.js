@@ -67,16 +67,95 @@ const addBookHandler = (request, h) => {
   return response;
 };
 
-const getAllBooksHandler = () => ({
-  status: 'success',
-  data: {
-    books: books.map((book) => ({
-      id: book.id,
-      name: book.name,
-      publisher: book.publisher,
-    })),
-  },
-});
+const getAllBooksHandler = (request) => {
+  const { name, reading, finished } = request.query;
+
+  if (name) {
+    return {
+      status: 'success',
+      data: {
+        books: books
+          .filter((book) => book.name.toLowerCase().includes(name.toLowerCase()))
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  if (reading === '0') {
+    return {
+      status: 'success',
+      data: {
+        books: books
+          .filter((book) => book.reading === false)
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  if (reading === '1') {
+    return {
+      status: 'success',
+      data: {
+        books: books
+          .filter((book) => book.reading === true)
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  if (finished === '0') {
+    return {
+      status: 'success',
+      data: {
+        books: books
+          .filter((book) => book.finished === false)
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  if (finished === '1') {
+    return {
+      status: 'success',
+      data: {
+        books: books
+          .filter((book) => book.finished === true)
+          .map((book) => ({
+            id: book.id,
+            name: book.name,
+            publisher: book.publisher,
+          })),
+      },
+    };
+  }
+
+  return {
+    status: 'success',
+    data: {
+      books: books.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
+    },
+  };
+};
 
 const getDetailBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
