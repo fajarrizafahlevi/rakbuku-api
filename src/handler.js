@@ -5,10 +5,9 @@ const addBookHandler = (request, h) => {
   const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
 
   const id = nanoid(16);
+  const finished = pageCount === readPage ? true : false;
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
-
-  const finished = pageCount === readPage ? true : false;
 
   const newBook = {
     id,
@@ -85,12 +84,12 @@ const getAllBooksHandler = (request) => {
     };
   }
 
-  if (reading === '0') {
+  if (reading === '0' || reading === '1') {
     return {
       status: 'success',
       data: {
         books: books
-          .filter((book) => book.reading === false)
+          .filter((book) => (reading === '0' ? book.reading === false : book.reading === true))
           .map((book) => ({
             id: book.id,
             name: book.name,
@@ -100,42 +99,12 @@ const getAllBooksHandler = (request) => {
     };
   }
 
-  if (reading === '1') {
+  if (finished === '0' || finished === '1') {
     return {
       status: 'success',
       data: {
         books: books
-          .filter((book) => book.reading === true)
-          .map((book) => ({
-            id: book.id,
-            name: book.name,
-            publisher: book.publisher,
-          })),
-      },
-    };
-  }
-
-  if (finished === '0') {
-    return {
-      status: 'success',
-      data: {
-        books: books
-          .filter((book) => book.finished === false)
-          .map((book) => ({
-            id: book.id,
-            name: book.name,
-            publisher: book.publisher,
-          })),
-      },
-    };
-  }
-
-  if (finished === '1') {
-    return {
-      status: 'success',
-      data: {
-        books: books
-          .filter((book) => book.finished === true)
+          .filter((book) => (finished === '0' ? book.finished === false : book.finished === true))
           .map((book) => ({
             id: book.id,
             name: book.name,
