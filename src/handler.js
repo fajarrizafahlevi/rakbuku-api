@@ -84,7 +84,7 @@ const getAllBooksHandler = (request) => {
     };
   }
 
-  if (reading === '0' || reading === '1') {
+  if (reading) {
     return {
       status: 'success',
       data: {
@@ -99,7 +99,7 @@ const getAllBooksHandler = (request) => {
     };
   }
 
-  if (finished === '0' || finished === '1') {
+  if (finished) {
     return {
       status: 'success',
       data: {
