@@ -13,9 +13,6 @@
     "no-console": "off",
     "linebreak-style": "off",
     "object-curly-newline": "off",
-    "no-unneeded-ternary": "off",
-    "no-confusing-arrow": "off",
-    "implicit-arrow-linebreak": "off",
-    "function-paren-newline": "off"
+    "no-unneeded-ternary": "off"
   }
 }
